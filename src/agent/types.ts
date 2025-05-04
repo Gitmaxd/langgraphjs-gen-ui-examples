@@ -20,6 +20,7 @@ export const GenerativeUIAnnotation = Annotation.Root({
     | "orderPizza"
     | "writerAgent"
     | "generalInput"
+    | "searchAgent"
   >(),
 });
 

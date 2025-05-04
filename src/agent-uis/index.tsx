@@ -6,6 +6,8 @@ import BuyStock from "./stockbroker/buy-stock";
 import Plan from "./open-code/plan";
 import ProposedChange from "./open-code/proposed-change";
 import { Writer } from "./writer";
+import SearchResults from "./search/search-results";
+import Search from "./search/index";
 
 const ComponentMap = {
   "stock-price": StockPrice,
@@ -16,5 +18,7 @@ const ComponentMap = {
   "code-plan": Plan,
   "proposed-change": ProposedChange,
   writer: Writer,
+  "search-results": SearchResults,
+  search: Search,
 } as const;
 export default ComponentMap;

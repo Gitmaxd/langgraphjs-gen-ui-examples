@@ -20,6 +20,7 @@ ${ALL_TOOL_DESCRIPTIONS}
         "orderPizza",
         "generalInput",
         "writerAgent",
+        "searchAgent",
       ])
       .describe(routerDescription),
   });
