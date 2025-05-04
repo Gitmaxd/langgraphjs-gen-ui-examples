@@ -1,0 +1,237 @@
+# This file defines project standards, conventions, and rules for AI assistants
+# It should be placed at the root of your project as .windsurfrules
+
+metadata:
+  version: "1.0.0"
+  created_at: "2025-05-04"
+  updated_at: "2025-05-04"
+  template_type: "project_rules"
+  intended_use: "AI IDE project configuration"
+  author: "GitMaxd"
+  package_url: "https://www.npmjs.com/package/ai-init"
+
+# Schema information to help LLMs understand the structure
+schema:
+  version: "1.0"
+  sections:
+    - project
+    - documentation
+    - conventions
+    - testing
+    - security
+    - architecture
+    - workflow
+    - maintenance
+    - commit_format
+    - rules
+    - llm_instructions
+    - examples
+    - template_completion
+
+description: LangGraph.js Generative UI Examples Project Configuration and Enforcement Rules
+
+# Project information - replace placeholders with actual values
+project:
+  name: "LangGraph Generative UI Examples"
+  type: "React TypeScript application"
+  goal: "Demonstrate generative UI capabilities with LangGraph.js agents for use with Agent Chat UI"
+  technologies:
+    - "React"
+    - "TypeScript"
+    - "LangGraph.js"
+    - "Tailwind CSS"
+    - "Vite"
+  features:
+    - "Multiple agent implementations (Supervisor, Stockbroker, Trip Planner, etc.)"
+    - "Generative UI components for interactive user experiences"
+    - "Tool-based agent architecture with LangGraph"
+
+# Documentation structure and requirements
+documentation:
+  locations:
+    - path: doc-files/
+      purpose: General project documentation
+    - path: memory-bank/
+      purpose: Structured project knowledge
+  memory_bank_required_files:
+    - projectbrief.md  # High-level project goals and requirements
+    - techContext.md   # Technical stack and architectural decisions
+    - systemPatterns.md # Common patterns and conventions
+    - activeContext.md # Current work in progress
+    - progress.md      # Project status and milestone tracking
+
+# Code style and conventions
+conventions:
+  general:
+    - Clear, descriptive variable and function names
+    - Comment complex logic
+    - Single responsibility functions
+    - Limit line length to 80 characters
+  javascript_typescript:
+    naming:
+      variables: 
+        pattern: "^[a-z][a-zA-Z0-9]*$"
+        style: camelCase
+        examples: ["userId", "apiResponse"]
+      classes: 
+        pattern: "^[A-Z][a-zA-Z0-9]*$"
+        style: PascalCase
+        examples: ["UserProfile", "ApiClient"]
+      files:
+        component: 
+          pattern: "^[A-Z][a-zA-Z0-9]*\.(tsx|jsx)$"
+          style: PascalCase
+          examples: ["Button.tsx", "UserProfile.tsx"]
+        utility:
+          pattern: "^[a-z][a-z0-9-]*\.(ts|js)$"
+          style: kebab-case
+          examples: ["api-helpers.ts", "date-utils.ts"]
+        page:
+          pattern: "^([a-z][a-z0-9-]*|\\[\\w+\\]|layout|page|loading|error)\\.tsx$"
+          style: "kebab-case for routes, snake_case for dynamic segments, lowercase for special files"
+          examples: ["about-us.tsx", "[product_id].tsx", "page.tsx"]
+    practices:
+      - Prefer const over let
+      - Avoid var
+      - Use async/await instead of promise chains
+      - Use functional components with hooks for React
+      - Follow typed patterns with TypeScript
+  css_scss:
+    naming: 
+      style: BEM
+      examples: [".block__element--modifier", ".card__title--highlighted"]
+    sort_properties: true
+    use_variables:
+      - colors
+      - spacing
+
+# Testing requirements
+testing:
+  required:
+    - Unit tests for utilities and services
+    - Component tests for UI elements
+    - Integration tests for agent flows
+  location: Colocated with code, .test.ts suffix
+  tools:
+    - Jest
+    - React Testing Library
+    - Playwright for E2E tests
+  coverage:
+    minimum: "80%"
+
+# Security guidelines
+security:
+  restricted_files:
+    - .env
+    - .env.*
+    - credentials.json
+    - "api-keys.json"
+  practices:
+    - Never hardcode API keys or credentials
+    - Use environment variables for sensitive configuration
+    - Sanitize user inputs to prevent injection attacks
+    - Follow secure coding practices for web applications
+    - Validate LLM inputs and outputs to prevent prompt injection
+
+# Architecture information
+architecture:
+  pattern: "Agent-based architecture with LangGraph.js"
+  state_management: "LangGraph state management + React Context"
+  api_communication: "LangGraph API with TypeScript interfaces"
+  routing:
+    - Use React Router for navigation
+    - Agent-based routing for different tool capabilities
+    - Graph-based flow control for agent interactions
+  directory_structure:
+    - src/                 # Source code
+    - src/agent/           # Agent implementations
+    - src/agent-uis/       # Generative UI components
+    - doc-files/           # Documentation files
+    - memory-bank/         # Project knowledge repository
+
+# Development workflow
+workflow:
+  process:
+    - Create branch per feature/fix
+    - Write tests before implementation when possible
+    - Run linters and tests before committing
+    - Follow conventional commits format
+
+# Maintenance procedures
+maintenance:
+  update_files:
+    - activeContext.md  # Update with current state
+    - progress.md       # Update with completed items
+    - systemPatterns.md # Update if new patterns emerge
+    - techContext.md    # Update if new technologies are introduced
+    - projectbrief.md   # Update if project goals change
+
+# Git commit message format
+commit_format:
+  pattern: "<type>[optional scope]: <description>\n\n[optional body]\n\n[optional footer]"
+  types:
+    - feat     # New feature
+    - fix      # Bug fix
+    - docs     # Documentation changes
+    - style    # Formatting changes
+    - refactor # Code change that neither fixes a bug nor adds a feature
+    - perf     # Performance improvements
+    - test     # Adding or correcting tests
+    - build    # Changes to build process
+    - ci       # Changes to CI configuration
+    - chore    # Maintenance tasks
+    - revert   # Revert previous commit
+  guidelines:
+    subject: "Imperative, lowercase, no period, ≤50 chars"
+    body: "Explain WHY, not HOW, wrap at 72 chars"
+    footer: "Use Fixes #123 or BREAKING CHANGE: description"
+  examples:
+    - "feat(agent): implement portfolio UI component"
+    - "fix(api): prevent timeout on large model responses\n\nIncreased request timeout and implemented streaming response.\nFixes #422"
+
+# Rules for enforcing project standards
+rules:
+  - name: architecture_alignment
+    description: Ensure new features follow LangGraph.js agent conventions
+    filters:
+      - type: file_extension
+        pattern: "\\.(ts|tsx|js|jsx)$"
+    actions:
+      - type: suggest
+        message: "Check documentation for guidance on agent architectural decisions. Follow LangGraph.js conventions for agent-based development."
+        
+  - id: "rule-001"
+    name: "memory_bank_enforcement"
+    description: "Memory bank files must exist and follow naming/location conventions"
+    severity: "error"
+    applies_to: "memory-bank/"
+    validation:
+      required_files:
+        - projectbrief.md
+        - techContext.md
+        - systemPatterns.md
+        - activeContext.md
+        - progress.md
+
+  - id: "rule-002"
+    name: "agent_best_practices"
+    description: "Enforce agent development best practices"
+    severity: "warning"
+    applies_to: "src/agent/"
+    validation:
+      file_patterns:
+        - pattern: "^index\\.ts$"
+          message: "Agent entry points should be named index.ts"
+        - pattern: "^types\\.ts$"
+          message: "Type definitions should be in types.ts files"
+        - pattern: "^nodes/.*\\.ts$" 
+          message: "Agent node implementations should be in the nodes/ directory"
+
+# Instructions for LLMs on how to interpret and apply these rules
+llm_instructions:
+  - "Use these rules to guide code generation and recommendations for the LangGraph.js project"
+  - "Enforce naming conventions defined in this file"
+  - "Suggest corrections when code doesn't follow these standards"
+  - "Follow the agent-based architecture pattern"
+  - "Prefer typed implementations with proper interfaces"
+  - "Follow the directory structure conventions for agents and UI components"
