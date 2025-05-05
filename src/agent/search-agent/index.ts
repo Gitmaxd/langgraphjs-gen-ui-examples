@@ -85,7 +85,6 @@ async function prepareSearch(
           
           searchQuery = args.query;
           toolCallId = toolCall.id;
-          console.log("Extracted search query:", searchQuery);
           
           ui.push(
             { id, name: "search", props: { query: searchQuery, isSearching: true } },
@@ -128,30 +127,23 @@ async function executeSearchNode(
   const ui = typedUi<typeof ComponentMap>(config);
   
   if (!state.searchQuery) {
-    console.log("No search query found in state");
     return {};
   }
 
-  console.log("Executing search for query:", state.searchQuery);
-  
   // Use the ID passed from the previous node
   const id = state.uiId;
   if (!id) {
-    console.log("No UI ID found in state");
     return {};
   }
 
   try {
     // Execute the search with Tavily
-    console.log("Calling Tavily API with query:", state.searchQuery);
     const results = await executeSearch({
       query: state.searchQuery,
       includeImages: true,
       searchDepth: "basic",
     });
     
-    console.log("Search results received:", results ? results.length : 0);
-
     // Create a human message to attach the UI to
     const humanMessage = new HumanMessage({
       content: `Here are the search results for "${state.searchQuery}"`,
@@ -208,12 +200,10 @@ async function formatResults(
   _config: LangGraphRunnableConfig,
 ): SearchUpdate {
   if (!state.searchResults || state.searchResults.length === 0) {
-    console.log("No search results to format");
     return {};
   }
 
-  console.log("Formatting search results");
-
+  
   const model = new ChatAnthropic({ model: MODEL_NAME });
   const resultsString = JSON.stringify(state.searchResults);
   
@@ -239,7 +229,7 @@ async function formatResults(
     summaryMessage = summaryMessage ? summaryMessage.concat(chunk) : chunk;
   }
 
-  console.log("Summary generated");
+  
   return { 
     messages: summaryMessage ? [summaryMessage] : []
   };
