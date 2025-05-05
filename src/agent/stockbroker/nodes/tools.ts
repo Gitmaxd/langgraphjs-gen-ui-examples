@@ -58,8 +58,6 @@ async function getPricesForTicker(ticker: string): Promise<{
       ? format(new Date(snapshotData.snapshot.time), "yyyy-MM-dd")
       : format(subDays(new Date(), 1), "yyyy-MM-dd"); // Fallback to yesterday
     
-    console.log(`Latest available data date for ${ticker}: ${latestDataDate}`);
-    
     const oneMonthAgo = format(subDays(new Date(), 30), "yyyy-MM-dd");
     
     // Use the latest available data date instead of today's date
